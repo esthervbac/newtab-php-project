@@ -1,3 +1,8 @@
+<?php
+$title = '>>> NEWTAB ACADEMY - PROJETO PHP <<<';
+$page = 'home';
+include_once('./nav.php');
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,19 +10,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>>>> Faça seu Pedido! <<< </title>
 </head>
 
 <body>
-
-    <?php
-
-    ?>
-
-
-    <!-- bootstrap -->
-    <link href="/vendor/twbs/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="/vendor/twbs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
