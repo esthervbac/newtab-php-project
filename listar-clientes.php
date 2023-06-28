@@ -31,9 +31,10 @@ include_once("config.php");
                         <div class="dataTables_length" id="example_length" flex>
                             <label flex>Mostre
                                 <select name="example_length" flex aria-controls="example" class="custom-select custom-select-sm form-control form-control-sm">
-                                    <option value="10">10</option>
-                                    <option value="25">25</option>
-                                    <option value="50">50</option>
+                                    <option value="10">20</option>
+                                    <option value="25">40</option>
+                                    <option value="50">60</option>
+                                    <option value="50">80</option>
                                     <option value="100">100</option>
                                 </select> entradas
                             </label>
