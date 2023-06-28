@@ -1,4 +1,6 @@
-<?php include("nav.php") ?>
+<?php
+require 'nav.php';
+?>
 
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -15,7 +17,7 @@
     <div class="container">
         <h1>Cadastrar Clientes</h1>
         <?php
-        include_once("config.php");
+        require 'config.php';
 
         $result = filter_input_array(INPUT_POST, FILTER_DEFAULT);
 
