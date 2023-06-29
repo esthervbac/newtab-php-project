@@ -17,94 +17,95 @@
         <?php
         include_once("config.php");
 
-        $result = filter_input_array(INPUT_POST, FILTER_DEFAULT);
-
-        if (!empty($_GET['id_cliente'])) {
-            $id = $_GET['id_cliente'];
-            $result = $conn->query("SELECT * FROM clientes WHERE id_cliente=$id");
-            $result->execute();
-
-            if ($result->rowCount() > 0) {
-                $result = $conn->prepare($query_result);
-                $result->bindParam(':nome', $result['nome'], PDO::PARAM_STR);
-                $result->bindParam(':email', $result['email'], PDO::PARAM_STR);
-                $result->bindParam(':cpf', $result['cpf'], PDO::PARAM_STR);
-
-                $result->execute();
-
-                while ($cliente_edit = $result->fetch(PDO::FETCH_ASSOC)) {
-                    echo "<tr>";
-                    echo "<td>" . $cliente_edit['nome_do_cliente'] . "</td>";
-                    echo "<td>" . $cliente_edit['email'] . "</td>";
-                    echo "<td>" . $cliente_edit['cpf'] . "</td>";
-                    echo "</tr>";
-                }
-            } else {
-                header('Location: /newtab-projeto-php-individual/listar-clientes.php');
-            }
-
-            //validação dos campos individualmente
-            if (empty($result['nome'])) {
-                echo "<p style='color:#f00;'>Erro: Necessário preencher o campo nome!</p>";
-            } elseif (empty($result['cpf'])) {
-                echo "<p style='color:#f00;'>Erro: Necessário preencher o campo CPF!</p>";
-            } elseif (empty($result['email'])) {
-                echo "<p style='color:#f00;'>Erro: Necessário preencher o campo email!</p>";
-            } else {
-                $query_result = "INSERT INTO clientes(nome_do_cliente, cpf, email) 
-                VALUES (:nome, :cpf, :email)";
-                $result = $conn->prepare($query_result);
-                $result->bindParam(':nome', $result['nome'], PDO::PARAM_STR);
-                $result->bindParam(':email', $result['email'], PDO::PARAM_STR);
-                $result->bindParam(':cpf', $result['cpf'], PDO::PARAM_STR);
-
-                $result->execute();
-
-                if ($result->rowCount()) {
-                    unset($result);
-                    echo "<p style='color: green;'>Mensagem enviada com sucesso!</p>";
-                } else {
-                    echo "<p style='color: #f00;'>Erro: Mensagem não enviada com sucesso!</p>";
-                }
-            }
+        $id = filter_input(INPUT_GET, "id_cliente", FILTER_SANITIZE_NUMBER_INT);
+        if (!empty($id)) {
+            $_SESSION['msg'] = "<p style='color: #f00;'>Erro: Usuário não encontrado!</p>";
+            // header("Location: /newtab-projeto-php-individual/listar-clientes.php");
+            exit();
         }
+        $result_clientes = $conn->prepare("SELECT id_cliente, nome_do_cliente, cpf, email 
+        FROM clientes 
+        WHERE id_cliente = :id 
+        LIMIT 1");
+        $result_clientes->bindParam(':id_cliente', $id, PDO::PARAM_INT);
+        $result_clientes->bindParam(':nome_do_cliente', $nome, PDO::PARAM_STR);
+        $result_clientes->bindParam(':cpf', $cpf, PDO::PARAM_STR);
+        $result_clientes->bindParam(':email', $email, PDO::PARAM_STR);
+        $result_clientes->execute();
+
+        if (($result_clientes) and ($result_clientes->rowCount() != 0)) {
+            $row_clientes = $result_clientes->fetch(PDO::FETCH_ASSOC);
+            var_dump($row_clientes);
+        } else {
+            $_SESSION['msg'] = "<p style='color: #f00;'>Erro: Usuário não encontrado!</p>";
+            // header("Location: /newtab-projeto-php-individual/listar-clientes.php");
+            exit();
+        }
+
+        // if ($result->rowCount()) {
+        //     while ($cliente_data = $result->fetch(PDO::FETCH_ASSOC)) {
+        //         $nome = $cliente_data['nome_do_cliente'];
+        //         $email = $cliente_data['email'];
+        //         $cpf = $cliente_data['cpf'];
+        //     }
+        //     print_r($nome);
+        // } else {
+        //     // header('Location: /newtab-projeto-php-individual/listar-clientes.php');
+        // }
+
+        // if ($result->rowCount() > 0) {
+
+        //     while ($cliente_edit = $result->fetch(PDO::FETCH_ASSOC)) {
+        //         $nome = $cliente_edit['nome'];
+        //         $email = $cliente_edit['email'];
+        //         $cpf = $cliente_edit['cpf'];
+        //     }
+        // } else {
+        //     header('Location: /newtab-projeto-php-individual/listar-clientes.php');
+        // }
+
+        //validação dos campos individualmente
+        // if (empty($cliente_edit['nome'])) {
+        //     echo "<p style='color:#f00;'>Erro: Necessário preencher o campo nome!</p>";
+        // } elseif (empty($cliente_edit['cpf'])) {
+        //     echo "<p style='color:#f00;'>Erro: Necessário preencher o campo CPF!</p>";
+        // } elseif (empty($cliente_edit['email'])) {
+        //     echo "<p style='color:#f00;'>Erro: Necessário preencher o campo email!</p>";
+        // } 
+        //     if ($result->rowCount()) {
+        //         unset($result);
+        //         echo "<p style='color: green;'>Mensagem enviada com sucesso!</p>";
+        //     } else {
+        //         echo "<p style='color: #f00;'>Erro: Mensagem não enviada com sucesso!</p>";
+        //     }
         ?>
         <br>
-        <form action="cadastrar-clientes.php" method="POST">
-            <?php
-            $nome = "";
-            if (isset($result['nome'])) {
-                $nome = $result['nome'];
-            } ?>
+        <form action="salvar-editar.php" method="POST">
             <div class="form-group row">
                 <label for="inputName3" class="col-sm-2 col-form-label">Nome:</label>
                 <div class="col-sm-10">
-                    <input type="name" class="form-control" id="inputName3" placeholder="Nome" name="nome" value="<?php echo $nome; ?>">
+                    <input type="name" class="form-control" id="inputName3" placeholder="Nome" name="nome" value="<?php if (isset($row_clientes['nome'])) {
+                                                                                                                        echo $row_clientes['nome'];
+                                                                                                                    } ?>" />
                 </div>
             </div>
-            <?php
-            $email = "";
-            if (isset($result['email'])) {
-                $email = $result['email'];
-            } ?>
             <div class="form-group row">
                 <label for="inputEmail3" class="col-sm-2 col-form-label">Email:</label>
                 <div class="col-sm-10">
-                    <input type="email" class="form-control" id="inputEmail3" placeholder="Email" name="email" value="<?php echo $email; ?>" oninput="validaEmail(this)">
+                    <input type="email" class="form-control" id="inputEmail3" placeholder="Email" name="email" oninput="validaEmail(this)" value="<?php if (isset($row_clientes['email'])) {
+                                                                                                                                                        echo $row_clientes['email'];
+                                                                                                                                                    } ?>" />
                 </div>
             </div>
-            <?php
-            $cpf = "";
-            if (isset($result['cpf'])) {
-                $cpf = $result['cpf'];
-            } ?>
             <div class="form-group row">
                 <label for="inputCpf3" class="col-sm-2 col-form-label">CPF:</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="inputCpf3" placeholder="000.000.000-00" name="cpf" value="<?php echo $cpf; ?>">
+                    <input type="text" class="form-control" id="inputCpf3" placeholder="000.000.000-00" name="cpf" value="<?php if (isset($row_clientes['cpf'])) {
+                                                                                                                                echo $row_clientes['cpf'];
+                                                                                                                            } ?>" />
                 </div>
             </div>
-            <input type="submit" name="submit" id="submit" class="btn btn-primary">
+            <input type="submit" name="submit" id="submit" class="btn btn-primary" value="Atualizar">
         </form>
     </div>
     <!-- scripts -->
