@@ -83,7 +83,6 @@ function formatCnpjCpf($cpfAtual)
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-success" data-bs-dismiss="modal">Cancelar</button>
                                     <a href="deletar.php?id=<?= $data[0] ?>" class="btn btn-danger">Deletar</a>
-                                    <!-- <button type="button" class="btn btn-danger">Deletar</button> -->
                                 </div>
                             </div>
                         </div>
