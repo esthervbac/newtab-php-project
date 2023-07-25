@@ -1,20 +1,14 @@
 <?php
 session_start();
 include '../includes/nav/nav.php';
-include '../controllers/clienteController.php';
-$obj = new clienteController();
+include '../controllers/produtoController.php';
+$obj = new produtoController();
 $data = $obj->mostrar($_GET['id']);
 
-$cpfAtual = $data[2];
-function formatCnpjCpf($cpfAtual)
-{
-    $CPF_LENGTH = 11;
-    $cpfAtual = preg_replace("/\D/", '', $cpfAtual);
+$valorunitario = $data[2];
+$valorUnitarioFormatado = number_format($data[2] / 100, 2, ",", ".");
 
-    if (strlen($cpfAtual) === $CPF_LENGTH) {
-        return preg_replace("/(\d{3})(\d{3})(\d{3})(\d{2})/", "\$1.\$2.\$3-\$4", $cpfAtual);
-    }
-}
+$dataFormatada = date_format(date_create($data[4]), 'd-m-Y H:i:s');
 
 ?>
 
@@ -43,9 +37,9 @@ function formatCnpjCpf($cpfAtual)
         <thead>
             <tr>
                 <th class="sorting sorting_asc" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-sort="ascending" aria-label="#ID: activate to sort column descending" style="width: 131.422px;">#ID</th>
-                <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Nome do Cliente: activate to sort column ascending" style="width: 217.078px;">Nome do Cliente</th>
-                <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="CPF: activate to sort column ascending" style="width: 36.5px;">CPF</th>
-                <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Email: activate to sort column ascending" style="width: 97.75px;">Email</th>
+                <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Nome do Produto: activate to sort column ascending" style="width: 217.078px;">Nome do Produto</th>
+                <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Valor Unitário: activate to sort column ascending" style="width: 36.5px;">Valor Unitário</th>
+                <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Código de Barras: activate to sort column ascending" style="width: 97.75px;">Código de Barras</th>
                 <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Data de Cadastro: activate to sort column ascending" style="width: 79.5px;">Data de Cadastro</th>
                 <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" style="width: 74.4531px;">Ações</th>
             </tr>
@@ -54,9 +48,9 @@ function formatCnpjCpf($cpfAtual)
             <tr>
                 <td scope="col"><?= $data[0] ?></td>
                 <td scope="col"><?= $data[1] ?></td>
-                <td scope="col"><?= formatCnpjCpf($cpfAtual) ?></td>
+                <td scope="col">R$ <?= $valorUnitarioFormatado; ?></td>
                 <td scope="col"><?= $data[3] ?></td>
-                <td scope="col"><?= $data[4] ?></td>
+                <td scope="col"><?= $dataFormatada ?></td>
                 <td scope="col">
                     <a class='btn btn-sm btn-primary' href='editar.php?id=<?= $data[0] ?>'>
                         <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-pencil' viewBox='0 0 16 16'>
@@ -82,7 +76,7 @@ function formatCnpjCpf($cpfAtual)
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-success" data-bs-dismiss="modal">Cancelar</button>
-                                    <a href="deletar.php?id=<?= $data[0] ?>" class="btn btn-danger">Deletar</a>
+                                    <a href='deletar.php?id=<?= $data[0] ?>' class="btn btn-danger">Deletar</a>
                                 </div>
                             </div>
                         </div>

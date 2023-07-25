@@ -4,7 +4,7 @@ class clienteController
     private $model;
     public function __construct()
     {
-        require 'c://xampp/htdocs/newtab-projeto-php-individual/models/clienteModel.php';
+        include '../models/clienteModel.php';
         $this->model = new clienteModel();
     }
     public function guardar($nome, $cpf, $email)
@@ -35,8 +35,10 @@ class clienteController
     public function atualizar($id, $nome, $cpf, $email)
     {
         session_start();
+
         $cpf_value_sented = trim($cpf); //retirando os espaços, pontos e traços do cpf
         $cpf_value = str_replace(array('.', '-', '/'), "", $cpf_value_sented); //retirando os espaços, pontos e traços do cpf
+
         $editar = $this->model->atualizar($id, $nome, $cpf_value, $email);
         if ($editar != false) {
             $_SESSION['messageEdit'] = "Cadastro atualizado com sucesso!";
