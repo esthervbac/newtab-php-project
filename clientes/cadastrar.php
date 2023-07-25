@@ -1,25 +1,10 @@
 <?php
 session_start();
-require 'C:\xampp\htdocs\newtab-projeto-php-individual\componentes\nav\nav.php';
-require 'C:\xampp\htdocs\newtab-projeto-php-individual/config/conexao.php';
+include '../includes/nav/nav.php';
 ?>
 
 <div class="container">
     <h1 class="pt-3">Cadastrar Clientes</h1>
-    <br>
-    <?php if (isset($_SESSION['messagecpf'])) : ?>
-        <h5 class="alert alert-danger">
-            <?= $_SESSION['messagecpf'];
-            unset($_SESSION['messagecpf']); ?>
-        </h5>
-    <?php endif; ?>
-    <br>
-    <?php if (isset($_SESSION['messageemail'])) : ?>
-        <h5 class="alert alert-danger">
-            <?= $_SESSION['messageemail'];
-            unset($_SESSION['messageemail']); ?>
-        </h5>
-    <?php endif; ?>
     <br>
     <?php if (isset($_SESSION['message'])) : ?>
         <h5 class="alert alert-danger">
@@ -52,5 +37,5 @@ require 'C:\xampp\htdocs\newtab-projeto-php-individual/config/conexao.php';
     </form>
 </div>
 <?php
-require 'C:\xampp\htdocs\newtab-projeto-php-individual\componentes\footer\footer.php';
+include '../includes/footer/footer.php';
 ?>

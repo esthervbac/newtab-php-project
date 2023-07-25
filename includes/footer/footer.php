@@ -51,7 +51,58 @@
     </script>
     <!-- scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="../../js/messagesucesso.js"></script>
+
+    <!-- Formata em estilo de moeda o valor adicionado pelo usuário enquanto ele digita -->
+    <script type="text/javascript">
+        function formatarMoeda() {
+            var elemento = document.getElementById('inputvalorunitario3');
+            var valor = elemento.value;
+
+            valor = valor + '';
+            valor = parseInt(valor.replace(/[\D]+/g, ''));
+            valor = valor + '';
+            valor = valor.replace(/([0-9]{2})$/g, ",$1");
+
+            if (valor.length > 6) {
+                valor = valor.replace(/([0-9]{3}),([0-9]{2}$)/g, ".$1,$2");
+            }
+
+            elemento.value = valor;
+            if (valor == 'NaN') elemento.value = '';
+        }
+    </script>
+
+    <!-- Verifica se apenas números podem ser inseridos nos inputs, não deixa letras serem adicionadas -->
+    <script type="text/javascript">
+        function testaCampoValor(e) {
+            e.preventDefault()
+
+            if ((/[0-9 -,]/g).test(e.key)) {
+                e.target.value += e.key
+            }
+        }
+    </script>
+
+    <!-- Formata para valores sem virgulas-->
+    <script type="text/javascript">
+        function formatarValorReal(valor) {
+            return parseFloat(valor.toString().replace('.', '').replace(',', '.'));
+        }
+    </script>
+    <!-- scripts -->
+    <script>
+        const search = document.getElementById('search');
+        search.addEventListener("keydown", function(event) {
+            if (event.key === "Enter") {
+                searchData();
+            }
+        });
+
+        function searchData() {
+            window.location = 'listar.php?search=' + search.value;
+        }
+    </script>
+    <!-- scripts -->
     </body>
 
     </html>

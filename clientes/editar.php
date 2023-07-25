@@ -1,9 +1,10 @@
 <?php
 session_start();
-require 'c://xampp/htdocs/newtab-projeto-php-individual/componentes/nav/nav.php';
-require 'c://xampp/htdocs/newtab-projeto-php-individual/controllers/clienteController.php';
+include '../includes/nav/nav.php';
+include '../controllers/clienteController.php';
 $obj = new clienteController();
 $data = $obj->mostrar($_GET['id']);
+
 ?>
 <div class="container-fluid">
     <form action="atualizar.php" method="POST" autocomplete="off">
@@ -11,6 +12,20 @@ $data = $obj->mostrar($_GET['id']);
             <a href="/newtab-projeto-php-individual" class="btn btn-primary">Voltar</a>
         </div>
         <h2 class="text-center pb-3">Editar Cadastro do Cliente</h2>
+        <br>
+        <?php if (isset($_SESSION['messagecpf'])) : ?>
+            <h5 class="alert alert-danger">
+                <?= $_SESSION['messagecpf'];
+                unset($_SESSION['messagecpf']); ?>
+            </h5>
+        <?php endif; ?>
+        <br>
+        <?php if (isset($_SESSION['messageemail'])) : ?>
+            <h5 class="alert alert-danger">
+                <?= $_SESSION['messageemail'];
+                unset($_SESSION['messageemail']); ?>
+            </h5>
+        <?php endif; ?>
         <br>
         <?php if (isset($_SESSION['messageEdit'])) : ?>
             <h5 class="alert alert-danger">
@@ -50,5 +65,5 @@ $data = $obj->mostrar($_GET['id']);
     </form>
 </div>
 <?php
-require 'C:\xampp\htdocs\newtab-projeto-php-individual\componentes\footer\footer.php';
+include '../includes/footer/footer.php';
 ?>
