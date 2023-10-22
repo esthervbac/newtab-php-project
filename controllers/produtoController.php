@@ -7,14 +7,14 @@ class produtoController
         include '../models/produtoModel.php';
         $this->model = new produtoModel();
     }
-    public function guardar($nomeproduto, $valorunitario, $codigobarras)
+    public function guardarProdutos($nomeproduto, $valorunitario, $codigobarras)
     {
         session_start();
 
         $valorunitario_value_sented = trim($valorunitario); //retirando os espaços, pontos e vírgula do valor unitário do produto
         $valorunitario_value = str_replace(array('.', ','), "", $valorunitario_value_sented); //retirando os espaços, pontos e traços do valor unitário do produto
 
-        $id = $this->model->inserir($nomeproduto, $valorunitario_value, $codigobarras);
+        $id = $this->model->inserirProdutos($nomeproduto, $valorunitario_value, $codigobarras);
         if ($id != false) {
             $_SESSION['message'] = "Cadastro realizado com sucesso!";
             header("Location:mostrar.php?id=" . $id);
@@ -25,22 +25,22 @@ class produtoController
             exit(0);
         }
     }
-    public function mostrar($id)
+    public function mostrarProdutos($id)
     {
-        return ($this->model->mostrar($id) != false) ? $this->model->mostrar($id) : header("Location: index.php");
+        return ($this->model->mostrarProdutos($id) != false) ? $this->model->mostrarProdutos($id) : header("Location: index.php");
     }
-    public function listar()
+    public function listarProdutos()
     {
-        return ($this->model->listar()) ? $this->model->listar() : false;
+        return ($this->model->listarProdutos()) ? $this->model->listarProdutos() : false;
     }
-    public function atualizar($id, $nomeproduto, $valorunitario, $codigobarras)
+    public function atualizarProdutos($id, $nomeproduto, $valorunitario, $codigobarras)
     {
         session_start();
 
         $valorunitario_value_sented = trim($valorunitario); //retirando os espaços, pontos e vírgula do valor unitário do produto
         $valorunitario_value = str_replace(array('.', ','), "", $valorunitario_value_sented); //retirando os espaços, pontos e traços do valor unitário do produto
 
-        $editar = $this->model->atualizar($id, $nomeproduto, $valorunitario_value, $codigobarras);
+        $editar = $this->model->atualizarProdutos($id, $nomeproduto, $valorunitario_value, $codigobarras);
         if ($editar != false) {
             $_SESSION['messageEdit'] = "Cadastro atualizado com sucesso!";
             header("Location:mostrar.php?id=" . $id);
@@ -51,8 +51,8 @@ class produtoController
             exit(0);
         }
     }
-    public function deletar($id)
+    public function deletarProdutos($id)
     {
-        return ($this->model->deletar($id)) ? header("Location:listar.php") : header("Location:mostrar.php?id=" . $id);
+        return ($this->model->deletarProdutos($id)) ? header("Location:listar.php") : header("Location:mostrar.php?id=" . $id);
     }
 }

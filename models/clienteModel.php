@@ -103,4 +103,32 @@ class clienteModel
         $query->bindParam(":id", $id);
         return ($query->execute()) ? true : false;
     }
+    // public function recuperar_cliente()
+    // {
+    //     $queryRecupera = '
+    // 		select 
+    // 		c.id_cliente, c.nome_do_cliente
+    // 		from 
+    // 			clientes as c 
+    // 		order by c.nome_do_cliente 
+    // 	';
+    //     $query = $this->PDO->prepare($queryRecupera);
+    //     $query->execute();
+    //     return $query->fetchAll(PDO::FETCH_OBJ);
+    // }
+    // public function recuperarClienteid($id)
+    // {
+    //     $queryRecuperaId = '
+    // 		select 
+    // 			c.id_cliente, c.nome_do_cliente
+    // 		from 
+    // 			clientes as c
+    // 		where
+    // 			c.id_cliente = :id
+    // 	';
+    //     $query = $this->PDO->prepare($queryRecuperaId);
+    //     $query->bindValue(':id', $id);
+    //     $query->execute();
+    //     return $query->fetchAll(PDO::FETCH_OBJ);
+    // }
 }

@@ -54,4 +54,12 @@ class clienteController
     {
         return ($this->model->deletar($id)) ? header("Location:listar.php") : header("Location:mostrar.php?id=" . $id);
     }
+    // public function recuperar_cliente()
+    // {
+    //     return ($this->model->recuperar_cliente());
+    // }
+    // public function recuperarClienteid($id)
+    // {
+    //     return ($this->model->recuperarClienteid($id));
+    // }
 }

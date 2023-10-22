@@ -3,7 +3,7 @@ session_start();
 include '../includes/nav/nav.php';
 include '../controllers/produtoController.php';
 $obj = new produtoController();
-$linhas = $obj->listar();
+$linhas = $obj->listarProdutos();
 
 ?>
 

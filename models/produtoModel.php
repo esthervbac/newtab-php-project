@@ -8,7 +8,7 @@ class produtoModel
         $conn = new db();
         $this->PDO = $conn->conexao();
     }
-    public function inserir($nomeproduto, $valorunitario, $codigobarras)
+    public function inserirProdutos($nomeproduto, $valorunitario, $codigobarras)
     {
         session_start();
 
@@ -32,13 +32,13 @@ class produtoModel
             exit(0);
         }
     }
-    public function mostrar($id)
+    public function mostrarProdutos($id)
     {
         $query = $this->PDO->prepare("SELECT * FROM produtos WHERE id_produtos = :id LIMIT 1");
         $query->bindParam(":id", $id);
         return ($query->execute()) ? $query->fetch() : false;
     }
-    public function listar()
+    public function listarProdutos()
     {
         if (!empty($_GET['search'])) {
             $data = $_GET['search'];
@@ -48,7 +48,7 @@ class produtoModel
         }
         return ($query->execute()) ? $query->fetchAll() : false;
     }
-    public function atualizar($id, $nomeproduto, $valorunitario, $codigobarras)
+    public function atualizarProdutos($id, $nomeproduto, $valorunitario, $codigobarras)
     {
         session_start();
 
@@ -74,7 +74,7 @@ class produtoModel
             exit(0);
         }
     }
-    public function deletar($id)
+    public function deletarProdutos($id)
     {
         $query = $this->PDO->prepare("DELETE FROM produtos WHERE id_produtos = :id");
         $query->bindParam(":id", $id);

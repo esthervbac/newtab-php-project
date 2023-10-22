@@ -36,7 +36,7 @@ include '../includes/nav/nav.php';
         <div class="form-group row">
             <label for="inputCodigBarras3" class="col-sm-2 col-form-label">Código de Barras:</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="inputCodigBarras3" placeholder="###-###" name="codigobarras" required title="Necessário preencher o campo código de barras!">
+                <input type="text" class="form-control" id="inputCodigBarras3" placeholder="###-###" name="codigobarras" required title="Necessário preencher o campo código de barras!" maxlength="20" style="text-transform:uppercase">
             </div>
         </div>
         <input type="submit" name="submit" id="submit" class="btn btn-primary">

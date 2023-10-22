@@ -3,7 +3,7 @@ session_start();
 include '../includes/nav/nav.php';
 include '../controllers/produtoController.php';
 $obj = new produtoController();
-$data = $obj->mostrar($_GET['id']);
+$data = $obj->mostrarProdutos($_GET['id']);
 
 $valorUnitarioFormatado = number_format($data[2] / 100, 2, ",", ".");
 
